@@ -122,7 +122,7 @@ function setupEnv() {
     comp.time = 0;
 
     //add a time remap keyframe at first frame
-    precompedLayer.timeRemap.setValueAtTime(0, precompedLayer.timeRemap.valueAtTime(0));
+    keyframeButton();
 
     app.endUndoGroup();
 
@@ -197,8 +197,8 @@ function nextButton() {
     app.project.activeItem.layers[1].timeRemapEnabled = true;
     comp.time = 0;
 
-    //add a time remap kf at first frame
-    precompedLayer.timeRemap.setValueAtTime(comp.time, precompedLayer.timeRemap.valueAtTime(comp.time));
+    //add a time remap keyframe at first frame
+    keyframeButton();
     return "Next comp";
 }
 
