@@ -24,6 +24,35 @@ body {
 	height: 225px;
 }
 
+#buttonHolder {
+	width:250px;
+	height:310px;
+	text-align: center;
+	border-style: dashed;
+	border-width: 1px;
+	border-color: #707070;
+}
+
+#previewSection {
+	width: 400px;
+	height: 355px;
+	display: inline-block;
+	color: white;
+}
+
+button {
+	margin-top:10px;
+	margin-bottom:10px;
+	background-color: #505050;
+	color:white;
+	opacity: .7;
+}
+
+button:hover {
+	cursor:pointer;
+	opacity: 1;
+}
+
 /* Let's get this party started */
 ::-webkit-scrollbar {
     width: 13px;

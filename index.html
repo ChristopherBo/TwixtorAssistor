@@ -28,7 +28,18 @@
 		</script>
 	</head>
 	<body scroll="no">
+
+	<div id="buttonHolder">
+		<button id="setup-button setup-button--enabled" onclick="setupClick()">setup</button>
+		<button id="next-button next-button--enabled" onclick="nextClick()">next</button>
+		<br>
+		<button id="back-button" onclick="backClick()">back</button>
+		<button id="forward-button" onclick="forwardClick()">forward</button>
+		<button id="keyframe-button" onclick="keyframeClick()">keyframe</button>
+	</div>
 	<div id="previewSection">
+		<br>
+		<p>Status: <span id="status">N/A</span></p>
 
 	</div>
 	<script>
