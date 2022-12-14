@@ -157,6 +157,48 @@ function nextButton() {
 
     alert("finding next comp...");
     //find next comp
+
+    //relocate twixFolder if necessary
+    var comp = app.project.activeItem;
+    if(twixFolder == null) {
+        for(var i=0; i > app.project.items.length; i++) {
+            if(app.project.items[i] instanceof FolderItem && app.project.items[i].name == "Twixtor Precomps") {
+                twixFolder = app.project.items[i];
+            }
+        }
+    }
+    alert("twixFolder: " + twixFolder.name);
+    if(twixFolder == null) { //it doesnt exist
+        return "Did not run setup!";
+    }
+
+    if(twixFolder.numItems == twixtored.length) {
+        return "Twixtoring already completed!";
+    }
+
+    var found;
+    var possible;
+    for(var i=1; i <= twixFolder.numItems; i++) {
+        possible = twixFolder.item(i);
+        found = false;
+        for(var j=0; j < twixtored.length; j++) {
+            if(possible == twixtored[j]) {
+                found = true;
+            }
+        }
+        if(found == false) {
+            break;
+        }
+    }
+    alert("found next comp " + possible.name);
+    //setup new comp
+    possible.openInViewer();
+    app.project.activeItem.layers[1].timeRemapEnabled = false;
+    app.project.activeItem.layers[1].timeRemapEnabled = true;
+    comp.time = 0;
+
+    //add a time remap kf at first frame
+    precompedLayer.timeRemap.setValueAtTime(comp.time, precompedLayer.timeRemap.valueAtTime(comp.time));
     return "Next comp";
 }
 
