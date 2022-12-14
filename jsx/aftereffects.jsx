@@ -20,3 +20,21 @@ function osCheck() {
     }
     return userOS;
 }
+
+function setupEnv() {
+    //alert("in jsx");
+    return "Setup Complete!";
+}
+function nextButton() {
+    alert("thank u, next");
+    return "Next comp";
+}
+function backButton() {
+    return "Back 1 frame";
+}
+function forwardButton() {
+    return "Forward 1 frame";
+}
+function keyframeButton() {
+    return "Keyframed!";
+}

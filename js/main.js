@@ -34,6 +34,43 @@ var interface = new CSInterface();
 	// }, 2000);
 
 }());
+
+function setupClick() {
+	//alert("setting up...");
+	interface.evalScript('setupEnv()', function(res) {
+		//alert("res: " + res);
+		$('status').innerText = res;
+	});
+}
+
+function nextClick() {
+	interface.evalScript('nextButton()', function(res) {
+		//alert("res: " + res);
+		$('status').innerText = res;
+	});
+}
+
+function backClick() {
+	interface.evalScript('backButton()', function(res) {
+		//alert("res: " + res);
+		$('status').innerText = res;
+	});
+}
+
+function forwardClick() {
+	interface.evalScript('forwardButton()', function(res) {
+		//alert("res: " + res);
+		$('status').innerText = res;
+	});
+}
+
+function keyframeClick() {
+	interface.evalScript('keyframeButton()', function(res) {
+		//alert("res: " + res);
+		$('status').innerText = res;
+	});
+}
+
 // function goIntoJSX() {
 	
 // 	}
