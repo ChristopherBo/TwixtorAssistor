@@ -132,12 +132,131 @@ function nextButton() {
     alert("thank u, next");
     return "Next comp";
 }
+
 function backButton() {
+    var comp = app.project.activeItem;
+    if(comp.time > 0) {
+        comp.time -= comp.frameDuration;
+    }
     return "Back 1 frame";
 }
+
 function forwardButton() {
+    var comp = app.project.activeItem;
+    if(comp.time < comp.duration + comp.displayStartTime) {
+        comp.time += comp.frameDuration;
+    }
     return "Forward 1 frame";
 }
+
 function keyframeButton() {
+    var layers = app.project.activeItem.selectedLayers;
+    var comp = app.project.activeItem;
+    // alert("comp.name: " + comp.name);
+    // alert("layers.length: " + layers.length);
+    // alert("comp layers: " + comp.layers.length);
+    if(layers.length == 1) {
+        if(layers[0].timeRemapEnabled == false) {
+            layers[0].timeRemapEnabled == true;
+        }
+        // alert("comp.time: " + comp.time);
+        // alert("time remap val at comp.time: " + layers[0].timeRemap.valueAtTime(comp.time));
+        layers[0].timeRemap.setValueAtTime(comp.time, layers[0].timeRemap.valueAtTime(comp.time));
+    } else if(comp.layers.length == 1) {
+        if(comp.layer(1).timeRemapEnabled == false) {
+            comp.layer(1).timeRemapEnabled = true;
+        }
+        // alert("comp.time: " + comp.time);
+        // alert("time remap val at comp.time: " + comp.layer(1).timeRemap.valueAtTime(comp.time, true));
+        comp.layer(1).timeRemap.setValueAtTime(comp.time, comp.layer(1).timeRemap.valueAtTime(comp.time, true));
+    } else {
+        return "Too many layers!";
+    }
     return "Keyframed!";
+}
+
+//checks if Twixtor is installed
+function checkForTwixtor(){
+    var effects = app.effects;
+    for (var i = 0; i < effects.length; i++){
+        if (effects[i].displayName == "Twixtor Pro") {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+//next functions are written by stibinator
+//source: https://github.com/stibinator/AEScripts/blob/master/Stibs%20AEScripts/(lib)/copyproperties-makekey.jsx
+//protected under gpl license
+function getKeyAttributes(theProperty, keyIndex) {
+    //in lieu of a proper keyframe object this returns all the details of a keyframe, given a property and key index.
+    var theAttributes = {};
+    theAttributes.keyTime = theProperty.keyTime(keyIndex);
+    theAttributes.keyVal = theProperty.keyValue(keyIndex);
+    theAttributes.canInterp =
+        theProperty.isInterpolationTypeValid(
+            KeyframeInterpolationType.BEZIER
+        ) ||
+        theProperty.isInterpolationTypeValid(KeyframeInterpolationType.HOLD) ||
+        theProperty.isInterpolationTypeValid(KeyframeInterpolationType.LINEAR);
+    if (theAttributes.canInterp) {
+        theAttributes.keyInInterpolationType =
+            theProperty.keyInInterpolationType(keyIndex);
+        theAttributes.keyOutInterpolationType =
+            theProperty.keyOutInterpolationType(keyIndex);
+        if (theAttributes.keyInInterpolationType) {
+            theAttributes.keyInTemporalEase =
+                theProperty.keyInTemporalEase(keyIndex);
+            theAttributes.keyOutTemporalEase =
+                theProperty.keyOutTemporalEase(keyIndex);
+        }
+    }
+
+    if (theAttributes.isSpatial) {
+        theAttributes.keyInSpatialTangent =
+            theProperty.keyInSpatialTangent(keyIndex);
+        theAttributes.keyOutSpatialTangent =
+            theProperty.keyOutSpatialTangent(keyIndex);
+    }
+    return theAttributes;
+}
+    
+function makeKeyWithAttributes(theProperty, keyAttributes, keyTime) {
+    //turns theAttributes from getKeyAttributes into a new keyframe
+    if (theProperty.canVaryOverTime) {
+        try {
+            theProperty.setValueAtTime(keyTime, keyAttributes.keyVal);
+            var newKeyIndex = theProperty.nearestKeyIndex(keyTime); //I wish Adobe would just make a keyframe class
+
+            if (keyAttributes.canInterp) {
+                theProperty.setTemporalEaseAtKey(
+                    newKeyIndex,
+                    keyAttributes.keyInTemporalEase,
+                    keyAttributes.keyOutTemporalEase
+                );
+                //important to do this after setting the temporal ease, or it turns all keyframes into bezier interpolation
+                theProperty.setInterpolationTypeAtKey(
+                    newKeyIndex,
+                    keyAttributes.keyInInterpolationType,
+                    keyAttributes.keyOutInterpolationType
+                );
+            }
+
+            //theProperty.setInterpolationTypeAtKey(theAttributes.keyInInterpolationType-6412, theAttributes.keyOutInterpolationType-6412); //WTF Javascript?
+            if (keyAttributes.isSpatial) {
+                theProperty.setSpatialTangentsAtKey(
+                    newKeyIndex,
+                    keyAttributes.keyInSpatialTangent,
+                    keyAttributes.keyOutSpatialTangent
+                );
+            }
+            return newKeyIndex;
+        } catch (e) {
+            return false;
+        }
+    } else {
+        return false;
+    }
 }
