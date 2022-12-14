@@ -161,7 +161,7 @@ function nextButton() {
     //relocate twixFolder if necessary
     var comp = app.project.activeItem;
     if(twixFolder == null) {
-        for(var i=0; i > app.project.items.length; i++) {
+        for(var i=1; i < app.project.items.length+1; i++) {
             if(app.project.items[i] instanceof FolderItem && app.project.items[i].name == "Twixtor Precomps") {
                 twixFolder = app.project.items[i];
             }
