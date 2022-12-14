@@ -123,6 +123,8 @@ function setupEnv() {
 
     //add a time remap keyframe at first frame
     keyframeButton();
+    //make time remap selected
+    precompedLayer.timeRemap.selected = true;
 
     app.endUndoGroup();
 
@@ -199,6 +201,9 @@ function nextButton() {
 
     //add a time remap keyframe at first frame
     keyframeButton();
+    //make time remap selected
+    app.project.activeItem.layers[1].timeRemap.selected = true;
+    
     return "Next comp";
 }
 
