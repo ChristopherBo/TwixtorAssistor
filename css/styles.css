@@ -7,6 +7,8 @@
 
 * {
 	font-family: Montserrat;
+	font-size: small;
+	color:white;
 }
 
 html {
@@ -44,8 +46,8 @@ button {
 	margin-top:10px;
 	margin-bottom:10px;
 	background-color: #505050;
-	color:white;
 	opacity: .7;
+	font-size: medium;
 }
 
 button:hover {
@@ -70,7 +72,6 @@ opacity: 0;
     opacity: 0;
 }
 
-F
 ::-webkit-scrollbar-button {
 	height: 10px;
 	width: 13px;
