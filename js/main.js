@@ -1,3 +1,12 @@
+//nice shortcut functions
+function $(id) {
+    return document.getElementById(id);
+}
+
+function $$(name, number) {
+    return document.getElementsByTagName(name)[number];
+}
+
 var interface = new CSInterface();
 (function () {
 	var path, slash;
@@ -10,6 +19,19 @@ var interface = new CSInterface();
 		slash = "/";
 		path = path.substring(8, path.length - 11);
 	}
+
+	// alert(path.slice(60, path.length));
+
+	//can run a given function in aftereffects.jsx
+	// interface.evalScript('testFunction()', function(res) {
+	// 	//anon function to do whatever you want with the result from the test function
+	// 	alert("anon func");
+	// });
+
+	//wait 2000 ms THEN run the stuff inside
+	// setTimeout(function() {
+	// 	//the stuff inside
+	// }, 2000);
 
 }());
 // function goIntoJSX() {
