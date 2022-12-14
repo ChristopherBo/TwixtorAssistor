@@ -226,6 +226,7 @@ function forwardButton() {
 function keyframeButton() {
     var layers = app.project.activeItem.selectedLayers;
     var comp = app.project.activeItem;
+    var kfExists = false;
     // alert("comp.name: " + comp.name);
     // alert("layers.length: " + layers.length);
     // alert("comp layers: " + comp.layers.length);
@@ -233,16 +234,36 @@ function keyframeButton() {
         if(layers[0].timeRemapEnabled == false) {
             layers[0].timeRemapEnabled == true;
         }
+
+        //if there's already a kf at the current frame remove it
+        for(var i=1; i < layers[0].timeRemap.numKeys+1; i++) {
+            if(layers[0].timeRemap.keyTime(i) == comp.time) {
+                kfExists = true;
+                layers[0].timeRemap.removeKey(i);
+            }
+        }
         // alert("comp.time: " + comp.time);
         // alert("time remap val at comp.time: " + layers[0].timeRemap.valueAtTime(comp.time));
-        layers[0].timeRemap.setValueAtTime(comp.time, layers[0].timeRemap.valueAtTime(comp.time));
+        if(!kfExists) {
+            layers[0].timeRemap.setValueAtTime(comp.time, layers[0].timeRemap.valueAtTime(comp.time, true));
+        }
     } else if(comp.layers.length == 1) {
         if(comp.layer(1).timeRemapEnabled == false) {
             comp.layer(1).timeRemapEnabled = true;
         }
+        //if there's already a kf at the current frame remove it
+        for(var i=1; i < comp.layer(1).timeRemap.numKeys+1; i++) {
+            if(comp.layer(1).timeRemap.keyTime(i) == comp.time) {
+                kfExists = true;
+                comp.layer(1).timeRemap.removeKey(i);
+            }
+        }
+
         // alert("comp.time: " + comp.time);
         // alert("time remap val at comp.time: " + comp.layer(1).timeRemap.valueAtTime(comp.time, true));
-        comp.layer(1).timeRemap.setValueAtTime(comp.time, comp.layer(1).timeRemap.valueAtTime(comp.time, true));
+        if(!kfExists) {
+            comp.layer(1).timeRemap.setValueAtTime(comp.time, comp.layer(1).timeRemap.valueAtTime(comp.time, true));
+        }
     } else {
         return "Too many layers!";
     }
