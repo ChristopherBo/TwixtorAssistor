@@ -1,5 +1,6 @@
 ﻿"object" != typeof JSON && (JSON = {}), function () { "use strict"; var rx_one = /^[\],:{}\s]*$/, rx_two = /\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, rx_three = /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, rx_four = /(?:^|:|,)(?:\s*\[)+/g, rx_escapable = /[\\"\u0000-\u001f\u007f-\u009f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g, rx_dangerous = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g, gap, indent, meta, rep; function f(t) { return t < 10 ? "0" + t : t } function this_value() { return this.valueOf() } function quote(t) { return rx_escapable.lastIndex = 0, rx_escapable.test(t) ? '"' + t.replace(rx_escapable, function (t) { var e = meta[t]; return "string" == typeof e ? e : "\\u" + ("0000" + t.charCodeAt(0).toString(16)).slice(-4) }) + '"' : '"' + t + '"' } function str(t, e) { var r, n, o, u, f, a = gap, i = e[t]; switch (i && "object" == typeof i && "function" == typeof i.toJSON && (i = i.toJSON(t)), "function" == typeof rep && (i = rep.call(e, t, i)), typeof i) { case "string": return quote(i); case "number": return isFinite(i) ? String(i) : "null"; case "boolean": case "null": return String(i); case "object": if (!i) return "null"; if (gap += indent, f = [], "[object Array]" === Object.prototype.toString.apply(i)) { for (u = i.length, r = 0; r < u; r += 1)f[r] = str(r, i) || "null"; return o = 0 === f.length ? "[]" : gap ? "[\n" + gap + f.join(",\n" + gap) + "\n" + a + "]" : "[" + f.join(",") + "]", gap = a, o } if (rep && "object" == typeof rep) for (u = rep.length, r = 0; r < u; r += 1)"string" == typeof rep[r] && (o = str(n = rep[r], i)) && f.push(quote(n) + (gap ? ": " : ":") + o); else for (n in i) Object.prototype.hasOwnProperty.call(i, n) && (o = str(n, i)) && f.push(quote(n) + (gap ? ": " : ":") + o); return o = 0 === f.length ? "{}" : gap ? "{\n" + gap + f.join(",\n" + gap) + "\n" + a + "}" : "{" + f.join(",") + "}", gap = a, o } } "function" != typeof Date.prototype.toJSON && (Date.prototype.toJSON = function () { return isFinite(this.valueOf()) ? this.getUTCFullYear() + "-" + f(this.getUTCMonth() + 1) + "-" + f(this.getUTCDate()) + "T" + f(this.getUTCHours()) + ":" + f(this.getUTCMinutes()) + ":" + f(this.getUTCSeconds()) + "Z" : null }, Boolean.prototype.toJSON = this_value, Number.prototype.toJSON = this_value, String.prototype.toJSON = this_value), "function" != typeof JSON.stringify && (meta = { "\b": "\\b", "\t": "\\t", "\n": "\\n", "\f": "\\f", "\r": "\\r", '"': '\\"', "\\": "\\\\" }, JSON.stringify = function (t, e, r) { var n; if (indent = gap = "", "number" == typeof r) for (n = 0; n < r; n += 1)indent += " "; else "string" == typeof r && (indent = r); if ((rep = e) && "function" != typeof e && ("object" != typeof e || "number" != typeof e.length)) throw new Error("JSON.stringify"); return str("", { "": t }) }), "function" != typeof JSON.parse && (JSON.parse = function (text, reviver) { var j; function walk(t, e) { var r, n, o = t[e]; if (o && "object" == typeof o) for (r in o) Object.prototype.hasOwnProperty.call(o, r) && (void 0 !== (n = walk(o, r)) ? o[r] = n : delete o[r]); return reviver.call(t, e, o) } if (text = String(text), rx_dangerous.lastIndex = 0, rx_dangerous.test(text) && (text = text.replace(rx_dangerous, function (t) { return "\\u" + ("0000" + t.charCodeAt(0).toString(16)).slice(-4) })), rx_one.test(text.replace(rx_two, "@").replace(rx_three, "]").replace(rx_four, ""))) return j = eval("(" + text + ")"), "function" == typeof reviver ? walk({ "": j }, "") : j; throw new SyntaxError("JSON.parse") }) }();
 var twixFolder;
+var twixtored = [];
 
 function getLayerNames(arg) {
     var layerNames = [];
@@ -130,6 +131,32 @@ function setupEnv() {
 
 function nextButton() {
     alert("thank u, next");
+    //base checks before starting
+    // if(debug.value) { writeToDebugFile("Making sure there's an active project...\n"); }
+    // Check that a project exists
+    if (app.project === null) {
+        alert("Project does not exist!");
+        return "Project does not exist!";
+    }
+
+    // if(debug.value) { writeToDebugFile("Making sure there's an active comp...\n"); }
+    // Check that an active comp exists
+    if (app.project.activeItem === null) {
+        alert("There is no active comp!");
+        return "There is no active comp!";
+    }
+
+    alert("collapsing keyframes...");
+    //finish old comp
+    //collapse all keyframes within the work area
+    selectKeysInWorkArea();
+    collapseKeyframes();
+
+    //mark it as finished by adding it to the twixtored list
+    twixtored.push(app.project.activeItem);
+
+    alert("finding next comp...");
+    //find next comp
     return "Next comp";
 }
 
@@ -186,6 +213,223 @@ function checkForTwixtor(){
     return false;
 }
 
+function collapseKeyframes() {
+    //alert("collapsekfs.");
+    //initalize important variables
+    var properties = [app.project.activeItem.layer(1).timeRemap]; //selected properties
+    var comp = app.project.activeItem;
+    var compfps = comp.frameRate;
+    var activeKeys = 0;
+    var prop;
+    var keys;
+
+    //we can't just read then modify per property because it deselects the selected keys
+    //we need to read and save all the selected keys then go modify them
+    
+    //read time
+    //would've used lists here but they dont always mantain order so dicts it is
+    var selectedKeys = {};
+    var selectedProps = {};
+    for(var i=0; i < properties.length; i++) {
+        //get the current prop and respective keys
+        prop = properties[i];
+        //do a deep copy of the keys so it doesn't get modified when keys get added/removed
+        keys = [];
+        for(var j=0; j < prop.selectedKeys.length; j++) {
+            keys[j] = prop.selectedKeys[j];
+        }
+        //add to respective dicts
+        selectedProps[i] = prop;
+        selectedKeys[i] = keys;
+    }
+
+    //alert("keys: " + properties[0].selectedKeys.length);
+    activeKeys = properties[0].selectedKeys.length;
+
+    //write/mod time
+    //for each property if there are multiple rows of keyframes selected
+    for(var i=0; i < properties.length; i++) {
+        prop = selectedProps[i];
+        keys = selectedKeys[i];
+        if(keys[1] == undefined) {
+            //there's 0 or 1 keys selected for this property, so do nothing
+        } else if(keys[1] == null) {
+            var keyAttributes = getKeyAttributes(prop, 1);
+            prop.removeKey(1);
+            makeKeyWithAttributes(prop, keyAttributes, 0);
+        } else {
+            var frameCounter = 1;
+            //loop through all the keys in the specific property
+            for(var j=keys[1]; j <= keys[keys.length-1]; j++) {
+                //alert("keyVal: " + prop.keyValue(j) + "\nkeyTime: " + prop.keyTime(j) + "\nnew keyTime: " + ((frameCounter)/compfps));
+                //you can't "move" a key, you can only make a new one and delete the old ones
+                //get key time before moving it
+                var keyAttributes = getKeyAttributes(prop, j);
+                //delete original keyframe
+                prop.removeKey(j);
+                //makeKeyAtTime(prop, keyAttributes, firstKeyframeTime+((frameCounter)/compfps));
+                makeKeyWithAttributes(prop, keyAttributes, ((frameCounter)/compfps));
+                frameCounter++;
+            }
+        }
+    }
+
+    if(activeKeys > 0) {
+        comp.duration = (activeKeys)/comp.frameRate;
+    }
+
+    app.endUndoGroup();
+    //alert("leaving collapse kfs");
+}
+
+/**
+ * Selects all keyframes in the work area
+ *
+ * @author Zack Lovatt <zack@lova.tt>
+ * @version 0.2.2
+ */
+//modified by me, ahrevolvers
+function selectKeysInWorkArea() {
+    var addToSelection = false;
+  
+    var comp = app.project.activeItem;
+  
+    if (!(comp && comp instanceof CompItem)) {
+      alert('Please select a composition!');
+      return;
+    }
+  
+    var targetProps = [];
+  
+    var timeRange = {
+      start: comp.workAreaStart,
+      end: comp.workAreaStart + comp.workAreaDuration,
+    };
+  
+    forAllLayersOfComp(comp, function (layer) {
+      targetProps = targetProps.concat(getKeyedProp(layer));
+    });
+  
+    app.beginUndoGroup('Select Keys In Work Area');
+  
+    forAllItemsInArray(targetProps, function (prop) {
+      if (prop.isSeparationLeader && prop.dimensionsSeparated) {
+        return;
+      }
+  
+      if (!prop.canSetExpression) {
+        return;
+      }
+  
+      if (!addToSelection) {
+        deselectKeys(prop);
+      }
+  
+      var keyIndexStart = prop.nearestKeyIndex(timeRange.start);
+      if (prop.keyTime(keyIndexStart) < timeRange.start) {
+        keyIndexStart++;
+      }
+  
+      var keyIndexEnd = prop.nearestKeyIndex(timeRange.end);
+      if (prop.keyTime(keyIndexEnd) > timeRange.end) {
+        keyIndexEnd--;
+      }
+  
+      for (var ii = keyIndexStart; ii <= keyIndexEnd; ii++) {
+        prop.setSelectedAtKey(ii, true);
+      }
+    });
+}
+
+function getKeyedProp(sourcePropGroup) {
+    var arr = [];
+
+    forAllPropsInGroup(sourcePropGroup, function (prop) {
+        if (isPropGroup(prop)) {
+            arr = arr.concat(getKeyedProp(prop));
+        } else if (isKeyed(prop)) {
+            arr.push(prop);
+        }
+    });
+
+    return arr;
+}
+
+/**
+ * Checks whether a property is a prop group
+ *
+ * @param {PropertyGroup | Property} prop Property to check
+ * @returns {boolean}                     Whether prop is a group
+ */
+function isPropGroup(prop) {
+    return (
+        prop.propertyType === PropertyType.INDEXED_GROUP ||
+        prop.propertyType === PropertyType.NAMED_GROUP
+    );
+}
+
+/**
+ * Checks whether a property has keys
+ *
+ * @param {Property} prop Property to check
+ * @returns {boolean}     Whether property has keys
+ */
+function isKeyed(prop) {
+    return (
+        prop.propertyType === PropertyType.PROPERTY &&
+        prop.isTimeVarying &&
+        prop.numKeys > 0
+    );
+}
+
+/**
+ * Deselects keys on a property
+ *
+ * @param {Property} prop Property to check
+ */
+function deselectKeys(prop) {
+    for (var ii = 1, il = prop.numKeys; ii <= il; ii++) {
+        prop.setSelectedAtKey(ii, false);
+    }
+}
+
+/**
+ * Runs a function on all properties in a group
+ *
+ * @param {PropertyGroup} propGroup Property group to run callback on
+ * @param {function} callback       Callback function
+ */
+function forAllPropsInGroup(propGroup, callback) {
+    for (var ii = 1, il = propGroup.numProperties; ii <= il; ii++) {
+        var thisProp = propGroup.property(ii);
+        callback(thisProp);
+    }
+}
+/**
+ * Runs a function on all items in an array
+ *
+ * @param {any[]} array       Array to run callback on
+ * @param {function} callback Callback function
+ */
+function forAllItemsInArray(array, callback) {
+    for (var ii = 0, il = array.length; ii < il; ii++) {
+        var thisItem = array[ii];
+        callback(thisItem);
+    }
+}
+
+/**
+ * Runs a function on all layers in an comp
+ *
+ * @param {CompItem} comp     Comp to run callback on
+ * @param {function} callback Callback function
+ */
+function forAllLayersOfComp(comp, callback) {
+    for (var ii = 1, il = comp.layers.length; ii <= il; ii++) {
+        var thisLayer = comp.layers[ii];
+        callback(thisLayer);
+    }
+}
 
 //next functions are written by stibinator
 //source: https://github.com/stibinator/AEScripts/blob/master/Stibs%20AEScripts/(lib)/copyproperties-makekey.jsx
