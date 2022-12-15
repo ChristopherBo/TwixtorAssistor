@@ -8,7 +8,7 @@
 * {
 	font-family: Montserrat;
 	font-size: small;
-	background-color: black;
+	/* background-color: black; */
 }
 
 html {
@@ -136,6 +136,7 @@ button {
 	background-color: #505050;
 	opacity: .7;
 	font-size: medium;
+	color:white;
 }
 
 button:hover {
