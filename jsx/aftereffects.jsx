@@ -131,7 +131,9 @@ function setupEnv() {
     return "Setup Complete!";
 }
 
-function nextButton() {
+function nextButton(renderQueue) {
+    //parse renderQueue, which is a string
+    renderQueue = renderQueue === 'true';
     //alert("thank u, next");
     //base checks before starting
     // if(debug.value) { writeToDebugFile("Making sure there's an active project...\n"); }
