@@ -20,16 +20,8 @@ var interface = new CSInterface();
 		path = path.substring(8, path.length - 11);
 	}
 
-	//block ae from using certain keys while this window is active
-	const keyEvents = [{
-		"keyCode": 84,
-		"ctrlKey": true,
-		"altKey": false,
-		"shiftKey": false,
-		"metaKey": false
-	}];
-
-	interface.registerKeyEventsInterest(JSON.stringify(keyEvents));
+	//block ae from using ALL keys while this window is active
+	keyRegisterOverride();
 
 	// alert(path.slice(60, path.length));
 
@@ -68,13 +60,13 @@ function toggleBinds(e) {
 	}
 }
 
-//event listeners
-window.addEventListener("keydown", function(event) {
-	if (event.key == 't') {
-		// do thing
-		this.alert("hiiii!");
-	}
-});
+//event listeners example
+// window.addEventListener("keydown", function(event) {
+// 	if (event.key == 't') {
+// 		// do thing
+// 		this.alert("hiiii!");
+// 	}
+// });
 
 
 function setupClick() {
@@ -131,3 +123,29 @@ function getOS() {
 	}
 	return os;
 }
+
+//disables ae keybinds while extension is active
+//from https://justintaylor.tv/hotkeys-in-cep/
+function keyRegisterOverride() {
+	const platform = navigator.platform.substring(0, 3);
+	let maxKey;
+	if (platform === 'Mac')
+		maxKey = 126; // Mac Max Key Code
+	else if (platform === 'Win')
+		maxKey = 222; // HTML Max Key Code
+	let allKeys = [];
+	for (let k = 0; k <= maxKey; k++) {
+		for (let j = 0; j <= 15; j++) {
+			const guide = (j >>> 0).toString(2).padStart(4, '0');
+			allKeys.push({
+				keyCode: k,
+				ctrlKey: guide[0] == 1,
+				altKey: guide[1] == 1,
+				shiftKey: guide[2] == 1,
+				metaKey: guide[3] == 1
+			});
+		}
+	}
+	const keyRes = interface.registerKeyEventsInterest(JSON.stringify(allKeys));
+	console.log('Key Events Registered Completed: ' + keyRes);
+};
