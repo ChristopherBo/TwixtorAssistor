@@ -38,8 +38,25 @@
 		<button id="keyframe-button" onclick="keyframeClick()">keyframe</button>
 		<br>
 		<br>
-		<input type="checkbox" id="custombinds-checkbox" name="custombinds-checkbox" value="false">
-		<label for="custombinds-checkbox">Enable custom binds?</label>
+
+		<label class="container">
+			<input type="checkbox" id="twixtor-checkbox" name="twixtor-checkbox" checked="checked">
+			<span class="checkmark"></span>
+			<label for="renderqueue-checkbox">Add Twixtor to completed comps</label>
+		</label>
+		<br>
+		<label class="container">
+			<input type="checkbox" id="renderqueue-checkbox" name="renderqueue-checkbox">
+			<span class="checkmark"></span>
+			<label for="renderqueue-checkbox">Send completed comps to render queue</label>
+		</label>
+		<br>
+		<br>
+		<label class="container">
+			<input type="checkbox" id="custombinds-checkbox" name="custombinds-checkbox" checked="checked">
+			<span class="checkmark"></span>
+			<label for="custombinds-checkbox">Enable custom binds?</label>
+		</label>
 		<br>
 		<div id="binds">
 			<input type="text" id="back-bind" value="Pg Up"/>
@@ -51,12 +68,6 @@
 			<input type="text" id="keyframe-bind" value="/"/>
 			<label for="back-bind">Add/Remove Keyframe</label>
 		</div>
-		<br>
-		<br>
-		<input type="checkbox" id="twixtor-checkbox" name="twixtor-checkbox" value="false">
-		<label for="renderqueue-checkbox">Add Twixtor to completed comps</label>
-		<input type="checkbox" id="renderqueue-checkbox" name="renderqueue-checkbox" value="false">
-		<label for="renderqueue-checkbox">Send completed comps to render queue</label>
 	</div>
 	<div id="previewSection">
 		<br>

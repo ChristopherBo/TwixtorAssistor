@@ -9,7 +9,7 @@
 	font-family: Montserrat;
 	font-size: small;
 	color:white;
-	background-color: black;
+	/* background-color: black; */
 }
 
 html {
@@ -26,8 +26,82 @@ input[type=text] {
 	background-color: transparent;
 	text-align: center;
 	align-self: left;
-	width: 75px;
+	width: 60px;
 }
+
+input[type="checkbox"] {
+	accent-color: red;
+}
+
+/* checkbox shit from w3cschools modded by me */
+/* The container */
+.container {
+	display: block;
+	position: relative;
+	padding-left: 25px;
+	/* margin-bottom: 10px; */
+	cursor: pointer;
+	/* font-size: 22px; */
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+/* hide default checkbox */
+.container input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+	position: absolute;
+	top: 0;
+	left: 2px;
+	height: 20px;
+	width: 20px;
+	background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+	background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+	background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+	display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+	left: 7.2px;
+	top: 4px;
+	width: 4px;
+	height: 8px;
+	border: solid white;
+	border-width: 0 3px 3px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+/* end of w3schools stuff */
 
 #binds {
 	text-align: left;
