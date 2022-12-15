@@ -20,6 +20,17 @@ var interface = new CSInterface();
 		path = path.substring(8, path.length - 11);
 	}
 
+	//block ae from using certain keys while this window is active
+	const keyEvents = [{
+		"keyCode": 84,
+		"ctrlKey": true,
+		"altKey": false,
+		"shiftKey": false,
+		"metaKey": false
+	}];
+
+	interface.registerKeyEventsInterest(JSON.stringify(keyEvents));
+
 	// alert(path.slice(60, path.length));
 
 	//can run a given function in aftereffects.jsx
@@ -34,6 +45,22 @@ var interface = new CSInterface();
 	// }, 2000);
 
 }());
+
+//if checkbox not checked gray out/disable keybinds
+if($('custombinds-checkbox').checked) {
+	$('binds').style.opacity = 50;
+} else {
+	$('binds').style.opacity = 100;
+}
+
+//event listeners
+window.addEventListener("keydown", function(event) {
+	if (event.key == 't') {
+		// do thing
+		this.alert("hiiii!");
+	}
+});
+
 
 function setupClick() {
 	//alert("setting up...");
