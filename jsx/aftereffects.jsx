@@ -154,8 +154,11 @@ function nextButton() {
     selectKeysInWorkArea();
     collapseKeyframes();
 
-    //mark it as finished by adding it to the twixtored list
+    //mark it as finished by adding it to the twixtored list & add to render queue
     twixtored.push(app.project.activeItem);
+    if(renderQueue) {
+        app.executeCommand(app.findMenuCommandId("Add to Render Queue"));
+    }
 
     //alert("finding next comp...");
     //find next comp

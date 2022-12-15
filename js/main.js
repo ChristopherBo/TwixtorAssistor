@@ -44,7 +44,7 @@ function setupClick() {
 }
 
 function nextClick() {
-	interface.evalScript('nextButton()', function(res) {
+	interface.evalScript('nextButton(' + $('renderqueue-checkbox').checked + ')', function(res) {
 		//alert("res: " + res);
 		$('status').innerText = res;
 	});
