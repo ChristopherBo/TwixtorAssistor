@@ -8,8 +8,7 @@
 * {
 	font-family: Montserrat;
 	font-size: small;
-	color:white;
-	/* background-color: black; */
+	background-color: black;
 }
 
 html {
@@ -27,6 +26,7 @@ input[type=text] {
 	text-align: center;
 	align-self: left;
 	width: 60px;
+	color:white;
 }
 
 input[type="checkbox"] {
@@ -105,7 +105,7 @@ input[type="checkbox"] {
 
 #binds {
 	text-align: left;
-	opacity: 100;
+	color: white;
 }
 
 #logoSection {
@@ -120,6 +120,7 @@ input[type="checkbox"] {
 	border-style: dashed;
 	border-width: 1px;
 	border-color: #707070;
+	color:white;
 }
 
 #previewSection {

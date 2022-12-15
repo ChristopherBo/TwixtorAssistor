@@ -47,10 +47,25 @@ var interface = new CSInterface();
 }());
 
 //if checkbox not checked gray out/disable keybinds
-if($('custombinds-checkbox').checked) {
-	$('binds').style.opacity = 50;
-} else {
-	$('binds').style.opacity = 100;
+var nodes;
+function toggleBinds(e) {
+	if(!$('custombinds-checkbox').checked) {
+		// alert("unchecked");
+		$('binds').style.color = 'grey';
+		nodes = document.querySelectorAll("input[type=text]");
+		for (var i=0; i<nodes.length; i++) {
+			nodes[i].style.color = 'grey';
+			nodes[i].setAttribute("readonly", "true");
+		}
+	} else {
+		// alert("checked");
+		$('binds').style.color = 'white';
+		nodes = document.querySelectorAll("input[type=text]");
+		for (var i=0; i<nodes.length; i++) {
+			nodes[i].style.color = 'white';
+			nodes[i].removeAttribute("readonly");
+		}
+	}
 }
 
 //event listeners
