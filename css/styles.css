@@ -9,6 +9,7 @@
 	font-family: Montserrat;
 	font-size: small;
 	color:white;
+	background-color: black;
 }
 
 html {
@@ -19,6 +20,18 @@ html {
 body {
 	overflow-y: hidden;
 	overflow-x: hidden;
+}
+
+input[type=text] {
+	background-color: transparent;
+	text-align: center;
+	align-self: left;
+	width: 75px;
+}
+
+#binds {
+	text-align: left;
+	opacity: 100;
 }
 
 #logoSection {
