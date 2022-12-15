@@ -131,9 +131,12 @@ function setupEnv() {
     return "Setup Complete!";
 }
 
-function nextButton(renderQueue) {
-    //parse renderQueue, which is a string
-    renderQueue = renderQueue === 'true';
+function nextButton(renderQueue, twixtor) {
+    //parse renderQueue & twixtor, which are strings
+    // alert("renderqueue: " + typeof(renderQueue) + " " + renderQueue);
+    // renderQueue = renderQueue === 'true';
+    // alert("twix: " + typeof(twixtor) + " " + twixtor);
+    // twixtor = twixtor === 'true';
     //alert("thank u, next");
     //base checks before starting
     // if(debug.value) { writeToDebugFile("Making sure there's an active project...\n"); }
@@ -156,10 +159,31 @@ function nextButton(renderQueue) {
     selectKeysInWorkArea();
     collapseKeyframes();
 
+    app.beginUndoGroup('Twixtor Assistor Next Button');
     //mark it as finished by adding it to the twixtored list & add to render queue
     twixtored.push(app.project.activeItem);
-    if(renderQueue) {
+    alert("renderqueue: " + typeof(renderQueue) + " " + renderQueue);
+    if(renderQueue == true) {
+        alert("rendering queue");
         app.executeCommand(app.findMenuCommandId("Add to Render Queue"));
+        alert("done");
+    }
+    alert("twix: " + typeof(twixtor) + " " + twixtor);
+    if(twixtor == true) {
+        alert("twixtoring...");
+        app.project.activeItem.layers[1]("Effects").addProperty("Twixtor Pro");
+        try {
+            app.project.activeItem.layers[1].Effects("Twixtor Pro")("In FPS is Out FPS").setValue(0);
+        } catch (e) {
+            //do nothing
+        }
+        try {
+            app.project.activeItem.layers[1].Effects("Twixtor Pro")("Output Control")("Time Remap Mode").setValue("1");
+        } catch (e) {
+            //do nothing
+        }
+        app.project.activeItem.layers[1].Effects("Twixtor Pro")("Input: Frame Rate").setValue(fps);
+        alert("done");
     }
 
     //alert("finding next comp...");
@@ -208,6 +232,7 @@ function nextButton(renderQueue) {
     keyframeButton();
     //make time remap selected
     app.project.activeItem.layers[1].timeRemap.selected = true;
+    app.endUndoGroup();
     
     return "Next comp";
 }
@@ -383,7 +408,7 @@ function selectKeysInWorkArea() {
       targetProps = targetProps.concat(getKeyedProp(layer));
     });
   
-    app.beginUndoGroup('Select Keys In Work Area');
+    //app.beginUndoGroup('Select Keys In Work Area');
   
     forAllItemsInArray(targetProps, function (prop) {
       if (prop.isSeparationLeader && prop.dimensionsSeparated) {
