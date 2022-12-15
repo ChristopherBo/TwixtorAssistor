@@ -60,13 +60,20 @@ function toggleBinds(e) {
 	}
 }
 
-//event listeners example
-// window.addEventListener("keydown", function(event) {
-// 	if (event.key == 't') {
-// 		// do thing
-// 		this.alert("hiiii!");
-// 	}
-// });
+//event listeners
+//listen for add/back/keyframe binds if custombinds checkbox enabled
+window.addEventListener("keydown", function(event) {
+	if($('custombinds-checkbox').checked) {
+		//this.alert(event.key);
+		if (event.key == $('back-bind').value) {
+			backClick();
+		} else if(event.key == $('forward-bind').value) {
+			forwardClick();
+		} else if(event.key == $('keyframe-bind').value) {
+			keyframeClick();
+		}
+	}
+});
 
 
 function setupClick() {

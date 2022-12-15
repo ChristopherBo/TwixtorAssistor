@@ -59,13 +59,13 @@
 		</label>
 		<br>
 		<div id="binds">
-			<input type="text" id="back-bind" value="Pg Up"/>
+			<input type="text" id="back-bind" value="PageUp" onchange="changeForward(event)"/>
 			<label for="back-bind">Forward 1 Frame</label>
 			<br>
-			<input type="text" id="forward-bind" value="Pg Down"/>
+			<input type="text" id="forward-bind" value="PageDown" onchange="changeBackward(event)"/>
 			<label for="back-bind">Back 1 Frame</label>
 			<br>
-			<input type="text" id="keyframe-bind" value="/"/>
+			<input type="text" id="keyframe-bind" value="/" onchange="changeKeyframe(event)"/>
 			<label for="back-bind">Add/Remove Keyframe</label>
 		</div>
 	</div>
