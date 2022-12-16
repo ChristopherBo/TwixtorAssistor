@@ -75,6 +75,40 @@ window.addEventListener("keydown", function(event) {
 	}
 });
 
+//listen for color theme changing
+function changeTheme(e) {
+	//alert(e.target.value);
+	//change color of bgnd text boxes
+	nodes = document.querySelectorAll("input[type=text]");
+	for (var i=0; i<nodes.length; i++) {
+		nodes[i].style.backgroundColor = e.target.value;
+	}
+	nodes = document.querySelectorAll("button");
+	for (var i=0; i<nodes.length; i++) {
+		nodes[i].style.backgroundColor = e.target.value;
+	}
+
+	nodes = document.getElementsByClassName('container');
+	for (var i=0; i<nodes.length; i++) {
+		//document.getElementsByClassName('container')[i].childNodes[3].style.backgroundColor = e.target.value;
+		if(document.getElementsByClassName('container')[i].childNodes[1].checked) {
+			document.getElementsByClassName('container')[i].childNodes[3].style.backgroundColor = e.target.value;
+		} else {
+			document.getElementsByClassName('container')[i].childNodes[3].style.backgroundColor = "white";
+		}
+	}
+}
+
+//check if checkbox checked or unchecked to make sure its being the right color
+function toggleCheckbox(e) {
+	//alert(e.currentTarget.id + " " + e.currentTarget.checked);
+	if(e.currentTarget.checked) {
+		e.currentTarget.parentNode.childNodes[3].style.backgroundColor = $('color-picker').value;
+	} else {
+		e.currentTarget.parentNode.childNodes[3].style.backgroundColor = "white";
+	}
+}
+
 
 function setupClick() {
 	//alert("setting up...");
@@ -133,6 +167,8 @@ function getOS() {
 
 //disables ae keybinds while extension is active
 //from https://justintaylor.tv/hotkeys-in-cep/
+// to target specific keys get the key codes from
+//https://css-tricks.com/snippets/javascript/javascript-keycodes/
 function keyRegisterOverride() {
 	const platform = navigator.platform.substring(0, 3);
 	let maxKey;

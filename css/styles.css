@@ -22,10 +22,10 @@ body {
 }
 
 input[type=text] {
-	background-color: transparent;
+	background-color: black;
 	text-align: center;
 	align-self: left;
-	width: 60px;
+	width: 75px;
 	color:white;
 }
 
@@ -69,12 +69,12 @@ input[type="checkbox"] {
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-	background-color: #ccc;
+	background-color: white;
 }
 
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-	background-color: #2196F3;
+	background-color: black;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -133,15 +133,15 @@ input[type="checkbox"] {
 button {
 	margin-top:10px;
 	margin-bottom:10px;
-	background-color: #505050;
-	opacity: .7;
+	background-color: black;
+	opacity: 1;
 	font-size: medium;
 	color:white;
 }
 
 button:hover {
 	cursor:pointer;
-	opacity: 1;
+	opacity: .8;
 }
 
 /* Let's get this party started */

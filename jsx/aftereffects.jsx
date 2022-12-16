@@ -1,5 +1,4 @@
 ﻿//todo:
-//js color picker for theming
 //flowframes batch script
 //mass import/replace original clip with flowframed clips
 
