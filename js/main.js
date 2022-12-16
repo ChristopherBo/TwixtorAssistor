@@ -97,6 +97,8 @@ function changeTheme(e) {
 			document.getElementsByClassName('container')[i].childNodes[3].style.backgroundColor = "white";
 		}
 	}
+
+	$('color-picker').style.backgroundColor = e.target.value;
 }
 
 //check if checkbox checked or unchecked to make sure its being the right color

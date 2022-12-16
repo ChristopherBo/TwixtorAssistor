@@ -108,6 +108,11 @@ input[type="checkbox"] {
 	color: white;
 }
 
+#color-picker {
+	background-color: black;
+	color:white;
+}
+
 #logoSection {
 	width: 400px;
 	height: 225px;
