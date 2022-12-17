@@ -54,7 +54,7 @@ function setupEnv() {
     var sequentialNameIndex = 1;
     for(var i=0; i < layers.length; i++) {
         for(var j=0; j < layers.length; j++) {
-            if(layers[i].name == layers[j].name) {
+            if(layers[i].name == layers[j].name && layers[i] != layers[j]) {
                 //fail case- go to sequential mode
                 //alert("MATCH:\n" + i + ":" + layers[i].name + "\n" + j + ":" + layers[j].name);
                 sequentialNames = true;
@@ -82,6 +82,7 @@ function setupEnv() {
                 //when comparing remove twix_ from comp names
                 if(layers[i].name == twixFolder.item(j).name.slice(5)) {
                     //fail case- go to sequential mode
+                    //alert("MATCH:\n" + i + ":" + layers[i].name + "\n" + j + ":" + twixFolder.item(j).name);
                     sequentialNames = true;
                     break;
                 }
