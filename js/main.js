@@ -62,17 +62,29 @@ function toggleBinds(e) {
 
 //event listeners
 //listen for add/back/keyframe binds if custombinds checkbox enabled
+var previousBinds = ["PageUp", "PageDown", "/", "*"];
 window.addEventListener("keydown", function(event) {
 	if($('custombinds-checkbox').checked) {
 		//this.alert(event.key);
-		if (event.key == $('back-bind').value) {
-			backClick();
-		} else if(event.key == $('forward-bind').value) {
-			forwardClick();
-		} else if(event.key == $('keyframe-bind').value) {
-			keyframeClick();
-		} else if(event.key == $('next-bind').value) {
-			nextClick();
+		//make sure the user wasnt just typing in a text box
+		if($('forward-bind').value != previousBinds[0]) {
+			previousBinds[0] = $('forward-bind').value;
+		} else if($('back-bind').value != previousBinds[1]) {
+			previousBinds[1] = $('back-bind').value;
+		} else if($('keyframe-bind').value != previousBinds[2]) {
+			previousBinds[2] = $('keyframe-bind').value;
+		} else if($('next-bind').value != previousBinds[3]) {
+			previousBinds[3] = $('next-bind').value;
+		} else { //definitely a normal bind press
+			if (event.key == $('back-bind').value) {
+				backClick();
+			} else if(event.key == $('forward-bind').value) {
+				forwardClick();
+			} else if(event.key == $('keyframe-bind').value) {
+				keyframeClick();
+			} else if(event.key == $('next-bind').value) {
+				nextClick();
+			}
 		}
 	}
 });
