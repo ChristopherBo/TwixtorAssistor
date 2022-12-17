@@ -48,6 +48,11 @@ function setupEnv() {
     var comp = app.project.activeItem;
     twixtored = []; //reset counter
 
+    //Check if layers are selected
+    if(layers.length == 0) {
+        return "No layers selected!";
+    }
+
     //alert("namecheck");
     //check to make sure each layer has a unique name- if not, just give it sequential numbers
     var sequentialNames = false;
@@ -94,7 +99,7 @@ function setupEnv() {
             var possible;
             for(var j=1; j <= twixFolder.numItems; j++) {
                 possible = parseInt(twixFolder.item(j).name.slice(5));
-                if(typeof(possible) == 'number' && possible > sequentialNameIndex) {
+                if(typeof(possible) == 'number' && isNaN(possible) == true && possible > sequentialNameIndex) {
                     sequentialNameIndex = possible;
                 }
             }
@@ -193,11 +198,23 @@ function nextButton(renderQueue, twixtor) {
         return "Did not run setup!";
     }
 
+    if(comp.name.slice(0, 5) != "twix_") {
+        return "Not in twix precomp!";
+    }
+
     //alert("collapsing keyframes...");
     //finish old comp
     //collapse all keyframes within the work area
     selectKeysInWorkArea();
-    collapseKeyframes();
+    try {
+        if(app.project.activeItem.selectedProperties[0].selectedKeys.length > 0) {
+            collapseKeyframes();
+        }
+    } catch(error) {
+        //if there are no selected keys and/or props itll error out
+        return "No time remap keyframes!";
+    }
+    
 
     app.beginUndoGroup('Twixtor Assistor Next Button');
     //mark it as finished by adding it to the twixtored list & add to render queue
