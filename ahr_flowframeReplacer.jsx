@@ -34,12 +34,6 @@
         return false;
     }
 
-    // // Check that an active comp exists
-    // if (app.project.activeItem === null) {
-    //     alert("There is no active comp!");
-    //     return false;
-    // }
-
     // Check that there's at least 1 selected item
     if (app.project.selection.length < 1) {
         alert("There is no selected layers to replace with!");
@@ -73,7 +67,6 @@
     }
 
     app.beginUndoGroup('Flowframes Replacer');
-    //TODO: ASK FOR TWIXTOR PRESET TO APPLY ON FLOWFRAMES CLIPS
     var TwixPreset = File.openDialog("Select Twixtor Preset to apply to clips... (Cancel to use default Twixtor)");
 
     //drop all the selected items in an array
@@ -100,8 +93,10 @@
         if(compLayer != comp.layers[1]) {
             compLayer.moveBefore(comp.layers[1]);
         }
+        //fit comp to layer specs
         comp.frameRate = compLayer.source.frameRate;
         comp.duration = compLayer.source.duration;
+        //make sure layer is full length- sometimes last frame gets cut off
         compLayer.outPoint = compLayer.source.duration;
 
         //apply preset; if no preset apply default twixtor
