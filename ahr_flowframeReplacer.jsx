@@ -63,6 +63,7 @@
 
     app.beginUndoGroup('Flowframes Replacer');
     //TODO: ASK FOR TWIXTOR PRESET TO APPLY ON FLOWFRAMES CLIPS
+    var TwixPreset = File.openDialog("Select Twixtor Preset to apply to clips... (Cancel to use default Twixtor)");
 
     //drop all the selected items in an array
     var layers = app.project.selection;
@@ -92,7 +93,28 @@
         comp.duration = compLayer.source.duration;
         compLayer.outPoint = compLayer.source.duration;
 
-        //TODO: MAKE IT APPLY TWIXTOR PRESET
+        //apply preset; if no preset apply default twixtor
+        try{
+            compLayer.applyPreset(File(TwixPreset));
+        } catch(error) {}
+        if(compLayer.Effects("Twixtor Pro") == null) {
+            compLayer("Effects").addProperty("Twixtor Pro");
+        }
+
+        //make sure to set twix's color source to the current layer
+        try {
+            compLayer.Effects("Twixtor Pro")("Color Source").setValue(1);
+        } catch(error) {}
+
+        //misc setting needs to be off
+        try {
+            compLayer.Effects("Twixtor Pro")("In FPS is Out FPS").setValue(0);
+        } catch (error) {}
+
+        //set the input framerate to clip framerate
+        try {
+            compLayer.Effects("Twixtor Pro")("Input: Frame Rate").setValue(compLayer.source.frameRate);
+        } catch(error) {}
     }
 
 })(this);
