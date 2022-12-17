@@ -14,11 +14,13 @@
 html {
 	overflow-x: hidden;
 	overflow-y: hidden;
+	height:100%;
 }
 
 body {
 	overflow-y: hidden;
 	overflow-x: hidden;
+	height:100%;
 }
 
 p {
@@ -136,6 +138,7 @@ input[type="checkbox"] {
 #buttonHolder {
 	/* width:250px;
 	height:310px; */
+	/* height:70%; */
 	text-align: center;
 	border-style: dashed;
 	border-width: 1px;
