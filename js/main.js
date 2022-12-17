@@ -72,7 +72,7 @@ window.addEventListener("keydown", function(event) {
 		} else if(event.key == $('keyframe-bind').value) {
 			keyframeClick();
 		} else if(event.key == $('next-bind').value) {
-			keyframeClick();
+			nextClick();
 		}
 	}
 });
