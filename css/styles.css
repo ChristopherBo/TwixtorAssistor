@@ -21,6 +21,15 @@ body {
 	overflow-x: hidden;
 }
 
+hr {
+	border-style: dashed;
+	border-width: 1px;
+	border-color: #707070;
+	color:white;
+	margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+}
+
 input[type=text] {
 	background-color: black;
 	text-align: center;
