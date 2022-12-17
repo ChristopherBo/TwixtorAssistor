@@ -156,6 +156,20 @@ function nextButton(renderQueue, twixtor) {
         return "There is no active comp!";
     }
 
+    //Check that the setup was run via checking for twix folder
+    var comp = app.project.activeItem;
+    if(twixFolder == null) {
+        for(var i=1; i < app.project.items.length+1; i++) {
+            if(app.project.items[i] instanceof FolderItem && app.project.items[i].name == "Twixtor Precomps") {
+                twixFolder = app.project.items[i];
+            }
+        }
+    }
+    //alert("twixFolder: " + twixFolder.name);
+    if(twixFolder == null) { //it doesnt exist
+        return "Did not run setup!";
+    }
+
     //alert("collapsing keyframes...");
     //finish old comp
     //collapse all keyframes within the work area
@@ -187,20 +201,6 @@ function nextButton(renderQueue, twixtor) {
 
     //alert("finding next comp...");
     //find next comp
-
-    //relocate twixFolder if necessary
-    var comp = app.project.activeItem;
-    if(twixFolder == null) {
-        for(var i=1; i < app.project.items.length+1; i++) {
-            if(app.project.items[i] instanceof FolderItem && app.project.items[i].name == "Twixtor Precomps") {
-                twixFolder = app.project.items[i];
-            }
-        }
-    }
-    //alert("twixFolder: " + twixFolder.name);
-    if(twixFolder == null) { //it doesnt exist
-        return "Did not run setup!";
-    }
 
     if(twixFolder.numItems == twixtored.length) {
         return "Twixtoring already completed!";
