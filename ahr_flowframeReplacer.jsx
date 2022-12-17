@@ -5,11 +5,22 @@
 // Given a folder of flowframes clips it places all of them in the
 // precomps they were twixtored in and formats their respective precomps
 // to the length and FPS of the flowframed clips.
+// Find more of these scripts on my channel https://www.youtube.com/c/AHRevolvers
 //
 // Prereq: The precomps you originally twixtored in must be in a folder
 //         named Twixtor Precomps. If you used my Twixtor Assistor
 //         extension, it should already exist with the precomps in it.
 // Usage: Select the flowframe clips and run it.
+//
+//Legal stuff:
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// This script is provided "as is," without warranty of any kind, expressed
+// or implied. In no event shall the author be held liable for any damages
+// arising in any way from the use of this script.
+//
 
 (function ahr_flowframeReplacer(thisObj) {
     var ahr_flowframeReplacer = new Object();	// Store globals in an object
