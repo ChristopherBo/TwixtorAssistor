@@ -61,6 +61,7 @@
         false
     }
 
+    app.beginUndoGroup('Flowframes Replacer');
     //TODO: ASK FOR TWIXTOR PRESET TO APPLY ON FLOWFRAMES CLIPS
 
     //drop all the selected items in an array
@@ -73,6 +74,8 @@
             }
         }
     }
+
+    app.endUndoGroup();
 
     //Given a comp and a layer, places the layer
     //in the comp and fits the comp to the layer's
