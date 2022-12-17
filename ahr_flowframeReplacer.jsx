@@ -60,6 +60,9 @@
         alert("There are no precomps in the Twixtor Precomps folder!");
         false
     }
+
+    //TODO: ASK FOR TWIXTOR PRESET TO APPLY ON FLOWFRAMES CLIPS
+
     //drop all the selected items in an array
     var layers = app.project.selection;
     for(var i=0; i < layers.length; i++) {
@@ -85,6 +88,8 @@
         comp.frameRate = compLayer.source.frameRate;
         comp.duration = compLayer.source.duration;
         compLayer.outPoint = compLayer.source.duration;
+
+        //TODO: MAKE IT APPLY TWIXTOR PRESET
     }
 
 })(this);
