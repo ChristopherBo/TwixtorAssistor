@@ -99,7 +99,7 @@ function setupEnv() {
             var possible;
             for(var j=1; j <= twixFolder.numItems; j++) {
                 possible = parseInt(twixFolder.item(j).name.slice(5));
-                if(typeof(possible) == 'number' && isNaN(possible) == true && possible > sequentialNameIndex) {
+                if(typeof(possible) == 'number' && isNaN(possible) == false && possible > sequentialNameIndex) {
                     sequentialNameIndex = possible;
                 }
             }
