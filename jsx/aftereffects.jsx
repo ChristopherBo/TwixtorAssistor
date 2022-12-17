@@ -30,19 +30,7 @@ function setupEnv() {
     //alert("in jsx");
 
     //base checks before starting
-    // if(debug.value) { writeToDebugFile("Making sure there's an active project...\n"); }
-    // Check that a project exists
-    if (app.project === null) {
-        alert("Project does not exist!");
-        return "Project does not exist!";
-    }
-
-    // if(debug.value) { writeToDebugFile("Making sure there's an active comp...\n"); }
-    // Check that an active comp exists
-    if (app.project.activeItem === null) {
-        alert("There is no active comp!");
-        return "There is no active comp!";
-    }
+    checks();
 
     // if(debug.value) { writeToDebugFile("Making sure Twixtor's installed...\n"); }
     // Check if twixtor's installed
@@ -141,20 +129,7 @@ function nextButton(renderQueue, twixtor) {
     // alert("twix: " + typeof(twixtor) + " " + twixtor);
     // twixtor = twixtor === 'true';
     //alert("thank u, next");
-    //base checks before starting
-    // if(debug.value) { writeToDebugFile("Making sure there's an active project...\n"); }
-    // Check that a project exists
-    if (app.project === null) {
-        alert("Project does not exist!");
-        return "Project does not exist!";
-    }
-
-    // if(debug.value) { writeToDebugFile("Making sure there's an active comp...\n"); }
-    // Check that an active comp exists
-    if (app.project.activeItem === null) {
-        alert("There is no active comp!");
-        return "There is no active comp!";
-    }
+    checks();
 
     //Check that the setup was run via checking for twix folder
     var comp = app.project.activeItem;
@@ -187,13 +162,16 @@ function nextButton(renderQueue, twixtor) {
     }
     //alert("twix: " + typeof(twixtor) + " " + twixtor);
     if(twixtor == true) {
+        if(checkForTwixtor() == false) {
+            alert("Twixtor is not installed! Continuing...");;
+        }
         //alert("twixtoring...");
         app.project.activeItem.layers[1]("Effects").addProperty("Twixtor Pro");
         try {
             app.project.activeItem.layers[1].Effects("Twixtor Pro")("In FPS is Out FPS").setValue(0);
         } catch (e) {}
         try {
-            app.project.activeItem.layers[1].Effects("Twixtor Pro")("Output Control")("Time Remap Mode").setValue("1");
+            app.project.activeItem.layers[1].Effects("Twixtor Pro")("Output Control")("Time Remap Mode").setValue(1);
         } catch (e) {}
         app.project.activeItem.layers[1].Effects("Twixtor Pro")("Input: Frame Rate").setValue(23.976);
         //alert("done");
@@ -237,6 +215,7 @@ function nextButton(renderQueue, twixtor) {
 }
 
 function backButton() {
+    checks();
     var comp = app.project.activeItem;
     if(comp.time > 0) {
         comp.time -= comp.frameDuration;
@@ -245,6 +224,7 @@ function backButton() {
 }
 
 function forwardButton() {
+    checks();
     var comp = app.project.activeItem;
     if(comp.time < comp.duration + comp.displayStartTime) {
         comp.time += comp.frameDuration;
@@ -253,6 +233,7 @@ function forwardButton() {
 }
 
 function keyframeButton() {
+    checks();
     var layers = app.project.activeItem.selectedLayers;
     var comp = app.project.activeItem;
     var kfExists = false;
@@ -308,6 +289,24 @@ function checkForTwixtor(){
         }
     }
     return false;
+}
+
+//Does basic checks to make sure a given button can be clicked.
+function checks() {
+    //base checks before starting
+    // if(debug.value) { writeToDebugFile("Making sure there's an active project...\n"); }
+    // Check that a project exists
+    if (app.project === null) {
+        alert("Project does not exist!");
+        return "Project does not exist!";
+    }
+
+    // if(debug.value) { writeToDebugFile("Making sure there's an active comp...\n"); }
+    // Check that an active comp exists
+    if (app.project.activeItem === null) {
+        alert("There is no active comp!");
+        return "There is no active comp!";
+    }
 }
 
 function collapseKeyframes() {
