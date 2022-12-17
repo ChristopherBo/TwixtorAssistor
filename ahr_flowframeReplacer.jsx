@@ -35,6 +35,14 @@
         return false;
     }
 
+    //Make sure all selected items are videos or img seqs
+    for(var i=0; i < app.project.activeItem.selectedLayers.length; i++) {
+        if(!(app.project.activeItem.selectedLayers[i] instanceof FootageItem)) {
+            alert("Item " + app.project.activeItem.selectedLayers[i].name + " is not a video file/img sequence!");
+            return false;
+        }
+    }
+
     //Check that the setup was run via checking for twix folder
     var twixFolder = null;
     for(var i=1; i < app.project.items.length+1; i++) {
@@ -56,7 +64,7 @@
     var layers = app.project.activeItem.selectedLayers;
 
     //collect all the comp names for regexing
-    var compNames = [];
+    // var compNames = [];
     // for(var i=1; i <= twixFolder.numItems; i++) {
     //     var comp = twixFolder.item(i);
     //     compNames.push(comp.name);
