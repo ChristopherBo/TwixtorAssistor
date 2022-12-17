@@ -30,7 +30,10 @@ function setupEnv() {
     //alert("in jsx");
 
     //base checks before starting
-    checks();
+    var baseChecks = checks();
+    if(baseChecks != true) {
+        return baseChecks;
+    }
 
     // if(debug.value) { writeToDebugFile("Making sure Twixtor's installed...\n"); }
     // Check if twixtor's installed
@@ -182,7 +185,10 @@ function nextButton(renderQueue, twixtor) {
     // alert("twix: " + typeof(twixtor) + " " + twixtor);
     // twixtor = twixtor === 'true';
     //alert("thank u, next");
-    checks();
+    var baseChecks = checks();
+    if(baseChecks != true) {
+        return baseChecks;
+    }
 
     //Check that the setup was run via checking for twix folder
     var comp = app.project.activeItem;
@@ -280,7 +286,10 @@ function nextButton(renderQueue, twixtor) {
 }
 
 function backButton() {
-    checks();
+    var baseChecks = checks();
+    if(baseChecks != true) {
+        return baseChecks;
+    }
     var comp = app.project.activeItem;
     if(comp.time > 0) {
         comp.time -= comp.frameDuration;
@@ -289,7 +298,10 @@ function backButton() {
 }
 
 function forwardButton() {
-    checks();
+    var baseChecks = checks();
+    if(baseChecks != true) {
+        return baseChecks;
+    }
     var comp = app.project.activeItem;
     if(comp.time < comp.duration + comp.displayStartTime) {
         comp.time += comp.frameDuration;
@@ -298,7 +310,10 @@ function forwardButton() {
 }
 
 function keyframeButton() {
-    checks();
+    var baseChecks = checks();
+    if(baseChecks != true) {
+        return baseChecks;
+    }
     var layers = app.project.activeItem.selectedLayers;
     var comp = app.project.activeItem;
     var kfExists = false;
@@ -372,6 +387,8 @@ function checks() {
         alert("There is no active comp!");
         return "There is no active comp!";
     }
+
+    return true;
 }
 
 function collapseKeyframes() {
