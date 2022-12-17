@@ -23,22 +23,22 @@
         return false;
     }
 
-    // Check that an active comp exists
-    if (app.project.activeItem === null) {
-        alert("There is no active comp!");
-        return false;
-    }
+    // // Check that an active comp exists
+    // if (app.project.activeItem === null) {
+    //     alert("There is no active comp!");
+    //     return false;
+    // }
 
     // Check that there's at least 1 selected item
-    if (app.project.activeItem.selectedLayers.length == 0) {
+    if (app.project.selection.length < 1) {
         alert("There is no selected layers to replace with!");
         return false;
-    }
+    } 
 
     //Make sure all selected items are videos or img seqs
-    for(var i=0; i < app.project.activeItem.selectedLayers.length; i++) {
-        if(!(app.project.activeItem.selectedLayers[i] instanceof FootageItem)) {
-            alert("Item " + app.project.activeItem.selectedLayers[i].name + " is not a video file/img sequence!");
+    for(var i=0; i < app.project.selection.length; i++) {
+        if(!(app.project.selection[i] instanceof FootageItem)) {
+            alert("Item " + app.project.selection[i].name + " is not a video file/img sequence!");
             return false;
         }
     }
@@ -61,15 +61,7 @@
         false
     }
     //drop all the selected items in an array
-    var layers = app.project.activeItem.selectedLayers;
-
-    //collect all the comp names for regexing
-    // var compNames = [];
-    // for(var i=1; i <= twixFolder.numItems; i++) {
-    //     var comp = twixFolder.item(i);
-    //     compNames.push(comp.name);
-    // }
-
+    var layers = app.project.selection;
     for(var i=0; i < layers.length; i++) {
         //check to see if the comp's name matches any of the layer names
         for(var j=1; j <= twixFolder.numItems; j++) {
@@ -84,7 +76,15 @@
     //framerate and length.
     //Also moves layer to top of comp.
     function processComp(comp, layer) {
-        
+        comp.layers.add(layer);
+        var compLayer = comp.layer(layer.name);
+        //make sure its the top layer in the comp
+        if(compLayer != comp.layers[1]) {
+            compLayer.moveBefore(comp.layers[1]);
+        }
+        comp.frameRate = compLayer.source.frameRate;
+        comp.duration = compLayer.source.duration;
+        compLayer.outPoint = compLayer.source.duration;
     }
 
 })(this);
