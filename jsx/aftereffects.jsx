@@ -53,7 +53,7 @@ function setupEnv() {
 
     //Check if layers are selected
     if(layers.length == 0) {
-        return "No layers selected!";
+        return "No layers selected to setup!";
     }
 
     //alert("namecheck");
