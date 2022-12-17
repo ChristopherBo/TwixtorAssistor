@@ -58,7 +58,24 @@ function setupEnv() {
     if(twixFolder == null) {
         twixFolder = app.project.items.addFolder("Twixtor Precomps");
     }
-    
+
+    //alert("namecheck");
+    //check to make sure each layer has a unique name- if not, just give it sequential numbers
+    var sequentialNames = false;
+    for(var i=0; i < layers.length; i++) {
+        for(var j=0; j < layers.length; j++) {
+            if(layers[i].name == layers[j].name) {
+                //fail case- go to sequential mode
+                //alert("MATCH:\n" + i + ":" + layers[i].name + "\n" + j + ":" + layers[j].name);
+                sequentialNames = true;
+                break;
+            }// else {
+            //     alert(i + ":" + layers[i].name + "\n" + j + ":" + layers[j].name);
+            // }
+        }
+    }
+
+    //alert("sequential names");
     //precomp range of layers
     for(var i=0; i < layers.length; i++) {
         // if(debug.value) { writeToDebugFile("Setting up " + layers[i].name + "\n"); }
@@ -71,7 +88,12 @@ function setupEnv() {
         layers[i].timeRemapEnabled == false;
         layers[i].timeRemapEnabled == true;
 
-        var precomp = comp.layers.precompose([layers[i].index], "twix_"+ layers[i].name, false);
+        var precomp;
+        if(sequentialNames) {
+            precomp = comp.layers.precompose([layers[i].index], "twix_"+ i.toString(), false);
+        } else {
+            precomp = comp.layers.precompose([layers[i].index], "twix_"+ layers[i].name, false);
+        }
         var precompLayer = comp.layers[layerIndex];
 
         //precomp fits the same area and same duration as original
