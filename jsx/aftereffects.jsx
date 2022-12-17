@@ -48,20 +48,10 @@ function setupEnv() {
     var comp = app.project.activeItem;
     twixtored = []; //reset counter
 
-    //alert("time to precomp");
-    //find twix precomps folder, if dne make it
-    for(var i=1; i < app.project.items.length+1; i++) {
-        if(app.project.items[i] instanceof FolderItem && app.project.items[i].name == "Twixtor Precomps") {
-            twixFolder = app.project.items[i];
-        }
-    }
-    if(twixFolder == null) {
-        twixFolder = app.project.items.addFolder("Twixtor Precomps");
-    }
-
     //alert("namecheck");
     //check to make sure each layer has a unique name- if not, just give it sequential numbers
     var sequentialNames = false;
+    var sequentialNameIndex = 1;
     for(var i=0; i < layers.length; i++) {
         for(var j=0; j < layers.length; j++) {
             if(layers[i].name == layers[j].name) {
@@ -72,6 +62,41 @@ function setupEnv() {
             }// else {
             //     alert(i + ":" + layers[i].name + "\n" + j + ":" + layers[j].name);
             // }
+        }
+    }
+
+    //alert("time to precomp");
+    //find twix precomps folder, if dne make it
+    for(var i=1; i < app.project.items.length+1; i++) {
+        if(app.project.items[i] instanceof FolderItem && app.project.items[i].name == "Twixtor Precomps") {
+            twixFolder = app.project.items[i];
+        }
+    }
+    if(twixFolder == null) {
+        twixFolder = app.project.items.addFolder("Twixtor Precomps");
+    } else {
+        //if it already existed we have to check the comp names inside it to see if the names match
+        //the ones we have selected
+        for(var i=0; i < layers.length; i++) {
+            for(var j=1; j <= twixFolder.numItems; j++) {
+                //when comparing remove twix_ from comp names
+                if(layers[i].name == twixFolder.item(j).name.slice(5)) {
+                    //fail case- go to sequential mode
+                    sequentialNames = true;
+                    break;
+                }
+            }
+        }
+        //if they do match we have to turn on sequentialNames, and if they're numerical we have to
+        //start from the highest numbered precomp that already exist
+        if(sequentialNames) {
+            var possible;
+            for(var j=1; j <= twixFolder.numItems; j++) {
+                possible = parseInt(twixFolder.item(j).name.slice(5));
+                if(typeof(possible) == 'number' && possible > sequentialNameIndex) {
+                    sequentialNameIndex = possible;
+                }
+            }
         }
     }
 
@@ -90,7 +115,7 @@ function setupEnv() {
 
         var precomp;
         if(sequentialNames) {
-            precomp = comp.layers.precompose([layers[i].index], "twix_"+ i.toString(), false);
+            precomp = comp.layers.precompose([layers[i].index], "twix_"+ (sequentialNameIndex + 1 + i).toString(), false);
         } else {
             precomp = comp.layers.precompose([layers[i].index], "twix_"+ layers[i].name, false);
         }
