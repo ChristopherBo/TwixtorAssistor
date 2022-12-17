@@ -47,11 +47,10 @@
 	<div id="buttonHolder">
 		<button id="setup-button setup-button--enabled" onclick="setupClick()">Setup</button>
 		<button id="next-button next-button--enabled" onclick="nextClick()">Next</button>
-		<br>
+		<br id="button-separator">
 		<button id="back-button" onclick="backClick()">Back</button>
 		<button id="forward-button" onclick="forwardClick()">Forward</button>
 		<button id="keyframe-button" onclick="keyframeClick()">Keyframe</button>
-		<br>
 		<br>
 
 		<label class="container">
@@ -59,7 +58,6 @@
 			<span class="checkmark"></span>
 			<label for="renderqueue-checkbox">Add Twixtor to completed comps</label>
 		</label>
-		<br>
 		<label class="container">
 			<input type="checkbox" id="renderqueue-checkbox" name="renderqueue-checkbox" onchange="toggleCheckbox(event)">
 			<span class="checkmark"></span>
@@ -71,7 +69,6 @@
 			<span class="checkmark"></span>
 			<label for="custombinds-checkbox">Enable custom binds?</label>
 		</label>
-		<br>
 		<div id="binds">
 			<input type="text" id="back-bind" value="PageUp" onchange="changeForward(event)"/>
 			<label for="back-bind">Forward 1 Frame</label>
@@ -87,9 +84,8 @@
 		</div>
 	</div>
 	<div id="previewSection">
-		<br>
 		<p>Status: <span id="status">N/A</span></p>
-		Color: <input value="000000" id="color-picker" onchange="changeTheme(event)" data-jscolor="{}">
+		Color: <input value="000000" id="color-picker" onchange="changeTheme(event)" data-jscolor="{}" style="width: 70px;">
 	</div>
 	<script>
 
