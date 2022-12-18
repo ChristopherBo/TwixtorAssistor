@@ -62,7 +62,7 @@ function toggleBinds(e) {
 
 //event listeners
 //listen for add/back/keyframe binds if custombinds checkbox enabled
-var previousBinds = ["PageUp", "PageDown", "/", "*"];
+var previousBinds = ["PageDown", "PageUp", "/", "*"];
 window.addEventListener("keydown", function(event) {
 	if($('custombinds-checkbox').checked) {
 		//this.alert(event.key);

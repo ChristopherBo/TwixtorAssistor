@@ -303,7 +303,7 @@ function backButton() {
     }
     var comp = app.project.activeItem;
     if(comp.time > 0) {
-        comp.time -= comp.frameDuration;
+        comp.time += comp.frameDuration;
     }
     return "Back 1 frame";
 }
@@ -315,7 +315,7 @@ function forwardButton() {
     }
     var comp = app.project.activeItem;
     if(comp.time < comp.duration + comp.displayStartTime) {
-        comp.time += comp.frameDuration;
+        comp.time -= comp.frameDuration;
     }
     return "Forward 1 frame";
 }
