@@ -76,13 +76,32 @@ window.addEventListener("keydown", function(event) {
 		} else if($('next-bind').value != previousBinds[3]) {
 			previousBinds[3] = $('next-bind').value;
 		} else { //definitely a normal bind press
-			if (event.key == $('back-bind').value) {
+			var key = "";
+			//this.alert("key: " + event.key + "\ncode: " + event.keyCode);
+			//check if numpad number
+			if(event.keyCode <= 105 && event.keyCode > 96) {
+				key = "numpad " + (event.keyCode-96).toString();
+			} else if(event.keyCode == 96) {
+				key = "numpad 0";
+			} else if(event.keycode == 107) {
+				key = "numpad +";
+			} else if(event.keyCode == 109) {
+				key = "numpad -";
+			} else if(event.keyCode == 110) {
+				key = "numpad .";
+			} else if(event.keycode == 111) {
+				key = "numpad /";
+			} else {
+				key = event.key.toString();
+			}
+			//this.alert("key after: " + key);
+			if (key == $('back-bind').value) {
 				backClick();
-			} else if(event.key == $('forward-bind').value) {
+			} else if(key == $('forward-bind').value.toLowerCase()) {
 				forwardClick();
-			} else if(event.key == $('keyframe-bind').value) {
+			} else if(key == $('keyframe-bind').value.toLowerCase()) {
 				keyframeClick();
-			} else if(event.key == $('next-bind').value) {
+			} else if(key == $('next-bind').value.toLowerCase()) {
 				nextClick();
 			}
 		}
