@@ -83,13 +83,15 @@ window.addEventListener("keydown", function(event) {
 				key = "numpad " + (event.keyCode-96).toString();
 			} else if(event.keyCode == 96) {
 				key = "numpad 0";
-			} else if(event.keycode == 107) {
+			} else if(event.keyCode == 106) {
+				key = "numpad *";
+			} else if(event.keyCode == 107) {
 				key = "numpad +";
 			} else if(event.keyCode == 109) {
 				key = "numpad -";
 			} else if(event.keyCode == 110) {
 				key = "numpad .";
-			} else if(event.keycode == 111) {
+			} else if(event.keyCode == 111) {
 				key = "numpad /";
 			} else {
 				key = event.key.toString().toLowerCase();
