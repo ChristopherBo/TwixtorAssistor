@@ -79,7 +79,10 @@ function setupEnv() {
         }
     }
 
-    // alert("find twix folder");
+    //if setup was run & undone twixFolder var gets corrupted, reset it
+    twixFolder = null;
+
+    //alert("find twix folder");
     //find twix precomps folder, if dne make it
     for(var i=1; i < app.project.items.length+1; i++) {
         if(app.project.items[i] instanceof FolderItem && app.project.items[i].name == "Twixtor Precomps") {
@@ -87,6 +90,7 @@ function setupEnv() {
         }
     }
     if(twixFolder == null) {
+        //alert("twix folder not found. adding twix folder...")
         twixFolder = app.project.items.addFolder("Twixtor Precomps");
     } else {
         //if it already existed we have to check the comp names inside it to see if the names match
