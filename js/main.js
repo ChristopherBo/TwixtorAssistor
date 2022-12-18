@@ -92,10 +92,10 @@ window.addEventListener("keydown", function(event) {
 			} else if(event.keycode == 111) {
 				key = "numpad /";
 			} else {
-				key = event.key.toString();
+				key = event.key.toString().toLowerCase();
 			}
 			//this.alert("key after: " + key);
-			if (key == $('back-bind').value) {
+			if (key == $('back-bind').value.toLowerCase()) {
 				backClick();
 			} else if(key == $('forward-bind').value.toLowerCase()) {
 				forwardClick();
