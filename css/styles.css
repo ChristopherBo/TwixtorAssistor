@@ -37,6 +37,27 @@ hr {
     margin-block-end: 0.6em;
 }
 
+h1 {
+	font-size: 2em;
+	text-align: center;
+}
+
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+  
+tr:nth-child(even) {
+	background-color: #424242;
+}
+
 input[type=text] {
 	background-color: #232323;
 	text-align: center;
@@ -209,12 +230,12 @@ button:hover {
     opacity: 0;
 }
  
-/* Track */
+
 ::-webkit-scrollbar-track {
 opacity: 0;
 }
  
-/* Handle */
+
 ::-webkit-scrollbar-thumb {
     background: rgba(17, 17, 17, 1); 
     opacity: 0;
