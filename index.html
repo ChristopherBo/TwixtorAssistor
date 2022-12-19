@@ -64,7 +64,7 @@
 			<label for="renderqueue-checkbox">Send completed comps to render queue</label>
 		</label>
 		<hr>
-		<label class="container">
+		<label class="container" id="bindcontainer">
 			<input type="checkbox" id="custombinds-checkbox" name="custombinds-checkbox" checked="checked" onchange="toggleBinds(event);toggleCheckbox(event)">
 			<span class="checkmark"></span>
 			<label for="custombinds-checkbox">Enable custom binds?</label>
@@ -83,9 +83,10 @@
 			<label for="next-bind">Next Clip</label>
 		</div>
 	</div>
+	<hr>
 	<div id="previewSection">
 		<p>Status: <span id="status">N/A</span></p>
-		Color: <input value="000000" id="color-picker" onchange="changeTheme(event)" data-jscolor="{}" style="width: 70px;">
+		Color: <input value="#232323" id="color-picker" onchange="changeTheme(event)" data-jscolor="{value:'#232323'}" style="width: 70px; border-radius:5px; border-style:solid; border-width: 1px;">
 	</div>
 	<script>
 

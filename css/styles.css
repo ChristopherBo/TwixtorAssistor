@@ -6,9 +6,10 @@
 }
 
 * {
-	font-family: Montserrat;
-	font-size: 11px;
-	/* background-color: black; */
+	font-family: system-ui, Ubuntu, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	font-size: 13px;
+	background-color: #232323;
+	color:#D7D7D7;
 }
 
 html {
@@ -29,21 +30,33 @@ p {
 }
 
 hr {
-	border-style: dashed;
+	border-style: solid;
 	border-width: 1px;
-	border-color: #707070;
-	color:white;
-	margin-block-start: 0.5em;
-    margin-block-end: 0.5em;
+	border-color: #313131;
+	margin-block-start: 1em;
+    margin-block-end: 0.6em;
 }
 
 input[type=text] {
-	background-color: black;
+	background-color: #232323;
 	text-align: center;
 	align-self: left;
 	width: 75px;
-	color:white;
+	color:#D7D7D7;
+	border-color:#D7D7D7;
+	border-radius: 4px;
+	border-width: 1px;
+	border-style: solid;
 }
+
+/* gets rid of the blue outline when selecting a text box */
+/* from https://stackoverflow.com/questions/17097512/how-can-i-change-the-border-outline-color-for-input-and-textarea-elements-in-twi */
+textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {   
+    border-color:#D7D7D7;
+    box-shadow: 0 0px 0px rgba(229, 103, 23, 0.075) inset, 0 0 0px rgba(229, 103, 23, 0.6);
+    outline: 0 none;
+}
+
 
 input[type="checkbox"] {
 	accent-color: red;
@@ -55,7 +68,8 @@ input[type="checkbox"] {
 	display: block;
 	position: relative;
 	padding-left: 25px;
-	height:25px;
+	margin-top: 5px;
+	height:20px;
 	/* margin-bottom: 10px; */
 	cursor: pointer;
 	/* font-size: 22px; */
@@ -63,6 +77,12 @@ input[type="checkbox"] {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	text-align: left;
+	/* font-size: 14px; */
+}
+
+.container[id="bindcontainer"] {
+	margin-bottom:5px;
 }
 
 /* hide default checkbox */
@@ -79,19 +99,24 @@ input[type="checkbox"] {
 	position: absolute;
 	top: 0;
 	left: 2px;
-	height: 20px;
-	width: 20px;
-	background-color: #eee;
+	height: 15px;
+	width: 15px;
+	background-color: #232323;
+	color:#D7D7D7;
+	border-radius: 3px;
+	border-style: solid;
+	border-width:2px;
 }
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-	background-color: white;
+	border-color: #B9B9B9;
+	background-color: #232323;
 }
 
-/* When the checkbox is checked, add a blue background */
+/* When the checkbox is checked, add a blue background 232323*/
 .container input:checked ~ .checkmark {
-	background-color: black;
+	background-color: #D7D7D7;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -108,11 +133,11 @@ input[type="checkbox"] {
 
 /* Style the checkmark/indicator */
 .container .checkmark:after {
-	left: 7.2px;
-	top: 4px;
+	left: 4px;
+	top: 0px;
 	width: 4px;
-	height: 8px;
-	border: solid white;
+	height: 10px;
+	border: solid #232323;
 	border-width: 0 3px 3px 0;
 	-webkit-transform: rotate(45deg);
 	-ms-transform: rotate(45deg);
@@ -122,12 +147,12 @@ input[type="checkbox"] {
 
 #binds {
 	text-align: left;
-	color: white;
+	color: #D7D7D7;
 }
 
 #color-picker {
-	background-color: black;
-	color:white;
+	background-color: #232323;
+	color:#D7D7D7;
 }
 
 /* #logoSection {
@@ -140,31 +165,39 @@ input[type="checkbox"] {
 	height:310px; */
 	/* height:70%; */
 	text-align: center;
-	border-style: dashed;
-	border-width: 1px;
+	border-style: none;
+	border-width: 0px;
 	border-color: #707070;
-	color:white;
+	color:#D7D7D7;
 }
 
 #previewSection {
 	/* width: 400px;
 	height: 355px; */
 	display: inline-block;
-	color: white;
+	color: #D7D7D7;
 }
 
 button {
 	margin-top:2px;
 	margin-bottom:2px;
-	background-color: black;
+	background-color: #232323;
 	opacity: 1;
 	font-size: 14px;
-	color:white;
+	color:#D7D7D7;
+	border-radius: 10px;
+	border-color:#D7D7D7;
+	border-width: 1px;
+	border-style: solid;
+	padding: 0px 10px;
 }
 
 button:hover {
 	cursor:pointer;
-	opacity: .8;
+	background-color: #D7D7D7;
+	color:#232323;
+	border-color:#D7D7D7;
+	border-width: 1px;
 }
 
 /* Let's get this party started */

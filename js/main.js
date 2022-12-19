@@ -126,10 +126,10 @@ function changeTheme(e) {
 	nodes = document.getElementsByClassName('container');
 	for (var i=0; i<nodes.length; i++) {
 		//document.getElementsByClassName('container')[i].childNodes[3].style.backgroundColor = e.target.value;
-		if(document.getElementsByClassName('container')[i].childNodes[1].checked) {
+		if(!document.getElementsByClassName('container')[i].childNodes[1].checked) {
 			document.getElementsByClassName('container')[i].childNodes[3].style.backgroundColor = e.target.value;
 		} else {
-			document.getElementsByClassName('container')[i].childNodes[3].style.backgroundColor = "white";
+			document.getElementsByClassName('container')[i].childNodes[3].style.backgroundColor = "#D7D7D7";
 		}
 	}
 
@@ -139,10 +139,10 @@ function changeTheme(e) {
 //check if checkbox checked or unchecked to make sure its being the right color
 function toggleCheckbox(e) {
 	//alert(e.currentTarget.id + " " + e.currentTarget.checked);
-	if(e.currentTarget.checked) {
+	if(!e.currentTarget.checked) {
 		e.currentTarget.parentNode.childNodes[3].style.backgroundColor = $('color-picker').value;
 	} else {
-		e.currentTarget.parentNode.childNodes[3].style.backgroundColor = "white";
+		e.currentTarget.parentNode.childNodes[3].style.backgroundColor = "#D7D7D7";
 	}
 }
 
