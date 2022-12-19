@@ -1,7 +1,4 @@
-﻿//todo:
-//change buttons to ashin's suggestion of ae styling
-
-//Change this variable to true to enable applying twixtor on the precomps
+﻿//Change this variable to true to enable applying twixtor on the precomps
 //with frame number enabled instead of in the precomps!
 var frameNumberTwixtor = false;
 
