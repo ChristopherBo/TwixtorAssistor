@@ -246,9 +246,9 @@ function nextButton(renderQueue, twixtor) {
     twixtored.push(app.project.activeItem);
     //alert("renderqueue: " + typeof(renderQueue) + " " + renderQueue);
     if(renderQueue) {
-        alert("rendering queue");
+        //alert("rendering queue");
         app.executeCommand(app.findMenuCommandId("Add to Render Queue"));
-        alert("done");
+        //alert("done");
     }
     //alert("twix: " + typeof(twixtor) + " " + twixtor);
     if(twixtor && frameNumberTwixtor == false) {
