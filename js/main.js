@@ -183,6 +183,13 @@ function keyframeClick() {
 	});
 }
 
+function replaceClick() {
+	interface.evalScript('replaceButton()', function(res) {
+		//alert("res: " + res);
+		$('status').innerText = res;
+	});
+}
+
 // function goIntoJSX() {
 	
 // 	}

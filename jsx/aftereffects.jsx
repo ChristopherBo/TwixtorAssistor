@@ -372,6 +372,91 @@ function keyframeButton() {
     return "Keyframed!";
 }
 
+function replaceButton() {
+    // Check that there's at least 1 selected item
+    if (app.project.selection.length < 1) {
+        return "There is no selected layers to replace with!";
+    } 
+
+    //Make sure all selected items are videos or img seqs
+    for(var i=0; i < app.project.selection.length; i++) {
+        if(!(app.project.selection[i] instanceof FootageItem)) {
+            return app.project.selection[i].name + " is not a video file/img sequence!";
+        }
+    }
+
+    //Check that the setup was run via checking for twix folder
+    var twixFolder = null;
+    for(var i=1; i < app.project.items.length+1; i++) {
+        if(app.project.items[i] instanceof FolderItem && app.project.items[i].name == "Twixtor Precomps") {
+            twixFolder = app.project.items[i];
+        }
+    }
+    if(twixFolder == null) { //it doesnt exist
+        return "Twixtor Precomps folder with original twixtor precomps does not exist!";
+    }
+
+    //Check that precomps exist in the twix folder
+    if(twixFolder.numItems < 1) {
+        return "There are no Twixtor Precomps!";
+    }
+
+    app.beginUndoGroup('Flowframes Replacer');
+    var TwixPreset = File.openDialog("Select Twixtor Preset to apply to clips... (Cancel to use default Twixtor)");
+
+    //drop all the selected items in an array
+    var layers = app.project.selection;
+    for(var i=0; i < layers.length; i++) {
+        //check to see if the comp's name matches any of the layer names
+        for(var j=1; j <= twixFolder.numItems; j++) {
+            if(new RegExp(twixFolder.item(j).name).test(layers[i].name)) {
+                processComp(twixFolder.item(j), layers[i], TwixPreset);
+            }
+        }
+    }
+
+    app.endUndoGroup();
+}
+
+//Given a comp and a layer, places the layer in the comp and fits the comp to the layer's
+//framerate and length. Also moves layer to top of comp.
+function processComp(comp, layer, TwixPreset) {
+    comp.layers.add(layer);
+    var compLayer = comp.layer(layer.name);
+    //make sure its the top layer in the comp
+    if(compLayer != comp.layers[1]) {
+        compLayer.moveBefore(comp.layers[1]);
+    }
+    //fit comp to layer specs
+    comp.frameRate = compLayer.source.frameRate;
+    comp.duration = compLayer.source.duration;
+    //make sure layer is full length- sometimes last frame gets cut off
+    compLayer.outPoint = compLayer.source.duration;
+
+    //apply preset; if no preset apply default twixtor
+    try{
+        compLayer.applyPreset(File(TwixPreset));
+    } catch(error) {}
+    if(compLayer.Effects("Twixtor Pro") == null) {
+        compLayer("Effects").addProperty("Twixtor Pro");
+    }
+
+    //make sure to set twix's color source to the current layer
+    try {
+        compLayer.Effects("Twixtor Pro")("Color Source").setValue(1);
+    } catch(error) {}
+
+    //misc setting needs to be off
+    try {
+        compLayer.Effects("Twixtor Pro")("In FPS is Out FPS").setValue(0);
+    } catch (error) {}
+
+    //set the input framerate to clip framerate
+    try {
+        compLayer.Effects("Twixtor Pro")("Input: Frame Rate").setValue(compLayer.source.frameRate);
+    } catch(error) {}
+}
+
 //checks if Twixtor is installed
 function checkForTwixtor(){
     var effects = app.effects;
