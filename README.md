@@ -6,7 +6,7 @@ Assists users with frame interpolation within After Effects, specifically catere
 ![AfterFX_2022-12-19_15-42-56](https://user-images.githubusercontent.com/70022209/208525146-91c6e79c-4313-4432-8839-31f7c46a00af.png)
 
 ## Prerequisites
-A copy of Adobe After Effects, preferably from 2018 or older.
+A copy of Adobe After Effects, preferably from 2018 or newer.
 
 ## Installation Method
 Download the repo and drop the Twixtor Assistor folder in `C:\Program Files (x86)\Common Files\Adobe\CEP\extensions\TwixtorAssistor`
