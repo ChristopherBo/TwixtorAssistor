@@ -183,6 +183,23 @@ function keyframeClick() {
 	});
 }
 
+function flowframeClick() {
+	interface.evalScript('flowframeButton()', function(res) {
+		//alert("res: " + res);
+		var filepaths = JSON.parse(res);
+		var exec = require('child_process').exec;
+		//exec flowframes on each clip
+
+		//when done go back to es
+		interface.evalScript('importFlowframedClips()', function(res) {
+			$('status').innerText = res;
+		}
+
+		
+	});
+
+}
+
 function replaceClick() {
 	interface.evalScript('replaceButton()', function(res) {
 		//alert("res: " + res);

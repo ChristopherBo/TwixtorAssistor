@@ -372,6 +372,26 @@ function keyframeButton() {
     return "Keyframed!";
 }
 
+function flowframeButton() {
+    //make sure render queue items have already rendered
+    
+    //find the newly rendered shitheads via their render queue dest paths
+
+    //put them in an array
+    var res = {};
+
+    //return the filepaths in a jsonified format
+    return JSON.jsonify(res);
+}
+
+function importFlowframedClips() {
+    //get filepaths from render queue clips based on length of twixtored global var
+
+    //alter filepaths to be their flowframe equivalents
+
+    //import flowframed clips
+}
+
 function replaceButton() {
     // Check that there's at least 1 selected item
     if (app.project.selection.length < 1) {
