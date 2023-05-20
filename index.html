@@ -88,6 +88,12 @@
 		<p>Status: <span id="status">N/A</span></p>
 		Color: <input value="#232323" id="color-picker" onchange="changeTheme(event)" data-jscolor="{value:'#232323'}" style="width: 70px; border-radius:5px; border-style:solid; border-width: 1px;">
 	</div>
+	<hr>
+	<div id="postSection">
+		<p style="text-align:center">Post-processing</p>
+		<button id="flowframe-button" onclick="flowframeClick()">Flowframe Exported Clips</button>
+		<button id="replace-button" onclick="replaceClick()">Replace Original Clips</button>
+	</div>
 	<script>
 
 		function getOS() {
