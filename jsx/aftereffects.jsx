@@ -373,23 +373,70 @@ function keyframeButton() {
 }
 
 function flowframeButton() {
-    //make sure render queue items have already rendered
-    
-    //find the newly rendered shitheads via their render queue dest paths
+    var res = [];
+    var twixRenderQueueCount = 0;
+    for(var i=1; i <= app.project.renderQueue.items.length; i++) {
+        //make sure render queue items have already rendered
+        if(app.project.renderQueue.items[i].comp.name.slice(0, 5) == "twix_") { // && twixRenderQueueCount <= twixtored.length
+            if(app.project.renderQueue.items[i].status == RQItemStatus.QUEUED) {  
+                alert("Did not render all twixtor precomps!");
+                return "Did not render precomps";
+            } else {
+                //find the newly rendered shitheads via their render queue dest paths
+                res.push(app.project.renderQueue.items[i].outputModule(1).file.fsName);
+            }
+        }
+    }
 
-    //put them in an array
-    var res = {};
+    if(res.length == 0) {
+        alert("No twixtor precomps to flowframe!");
+        return "No twixtor precomps rendered!";
+    }
 
     //return the filepaths in a jsonified format
-    return JSON.jsonify(res);
+    return res;
 }
 
 function importFlowframedClips() {
     //get filepaths from render queue clips based on length of twixtored global var
-
-    //alter filepaths to be their flowframe equivalents
+    var flowframedPaths = [];
+    for(var i=1; i <= twixtored.length; i++) {
+        //make sure render queue items have already rendered
+        if(app.project.renderQueue.items[i].comp.name.slice(0, 5) == "twix_") {
+            if(app.project.renderQueue.items[i].status != RQItemStatus.DONE) {  
+                alert("Did not render all twixtor precomps!");
+                return "Did not render precomps";
+            } else {
+                //find the newly flowframed clips via their render queue dest paths
+                const original = app.project.renderQueue.items[i].outputModule(1).file.fullName.split('.').slice(0, -1).join('.');
+                const folder = app.project.renderQueue.items[i].outputModule(1).file.parent;
+                const subFiles = folder.getFiles();
+                //if a file in the same folder as the original clip has it's name + -8x- its the right one
+                for(var j=0; j < subFiles.length; j++) {
+                    if(subFiles[j].fullName.search(original) != -1 && subFiles[j].fullName.search("-8x-") != -1) {
+                        const flowframed = File(original + "");
+                        flowframedPaths.push();
+                        break;
+                    }
+                }
+                if(flowframedPaths.length != i) {
+                    alert("Could not find flowframed clip for " + app.project.renderQueue.items[i].outputModule(1).file.name + "!")
+                }
+            }
+        }
+    }
 
     //import flowframed clips
+    var imported = [];
+    for(var i=0; i < flowframedPaths.length; i++) {
+        const newFootageItem = app.project.importFile(new ImportOptions(new File(flowframedPaths[i])));
+        imported.push(newFootageItem);
+    }
+
+    //select the new clips
+    for(var i=0; i < imported.length; i++) {
+        imported.selected = true;
+    }
 }
 
 function replaceButton() {

@@ -8,6 +8,7 @@ function $$(name, number) {
 }
 
 var interface = new CSInterface();
+var flowframesPath = "";
 (function () {
 	var path, slash;
 	path = location.href;
@@ -184,20 +185,73 @@ function keyframeClick() {
 }
 
 function flowframeClick() {
+	//find flowframes - check desktop, then onedrive desktop, then program files
+	const fs = require("fs");
+	const homeDir = require('os').homedir(); // See: https://www.npmjs.com/package/os
+	var flowframesPath = `${homeDir}\\Desktop\\Flowframes.lnk`;
+	if (!fs.existsSync(flowframesPath)) {
+		flowframesPath = `${homeDir}\\OneDrive\\Desktop\\Flowframes.lnk`;
+		if(!fs.existsSync(flowframesPath)) {
+			flowframesPath = `C:/Program Files/Flowframes/Flowframes.exe`;
+			if(!fs.existsSync(flowframesPath)) {
+				flowframesPath = `G:/Program Files/Flowframes/Flowframes.exe`;
+				if(!fs.existsSync(flowframesPath)) {
+					//TODO: if in neither directory, make a popup that lets the user put in their path
+					alert("flowframes wasn't found in program files or desktop!") //placeholder
+					$('status').innerText = "ERROR: No Flowframes.exe!";
+				}
+			}
+		}
+	}
+
+	//if we're dealing with a shortcut, find the shortcut destination
+	if(flowframesPath.includes('.lnk')) {
+		var ws = require('windows-shortcuts');
+		ws.query(flowframesPath, function(err, options) {
+			if(err) {
+				alert(err);
+			} else {
+				flowframesPath = options.target;
+				flowframeClickContinued(options.target);
+			}
+		});
+	} else {
+		flowframeClickContinued(flowframesPath);
+	}
+}
+
+function flowframeClickContinued(flowframesPath) {
+	//Check if clips are rendered,
 	interface.evalScript('flowframeButton()', function(res) {
-		//alert("res: " + res);
-		var filepaths = JSON.parse(res);
+		if(res == "Did not render precomps" || res == "No twixtor precomps rendered!") {
+			$('status').innerText = res;
+			return;
+		}
+		var filepaths = res.split(",");
+		var processedFiles = 0;
 		var exec = require('child_process').exec;
 		//exec flowframes on each clip
+		for(var i=0; i < filepaths.length; i++) {
+			// alert("\"" + flowframesPath + '\" \"' + filepaths[i] + '\" -start -factor=8 -quit-when-done -output-mode=3')
+			exec("\"" + flowframesPath + '\" \"' + filepaths[i] + '\" -start -factor=8 -quit-when-done -output-mode=3',
+				function (error, stdout, stderr) {
+					// alert("Error: " + error + "\nstdout: " + stdout + "\nstderr: " + stderr);
+					processedFiles++;
+					importFlowframedClips(processedFiles, filepaths.length);
+			});
+		}
+	});
+}
 
+//called in the exec async to prevent being run early
+//only runs when conditions are met
+function importFlowframedClips(processedFiles, filepaths) {
+	if(processedFiles == filepaths) {
 		//when done go back to es
 		interface.evalScript('importFlowframedClips()', function(res) {
 			$('status').innerText = res;
-		}
-
-		
-	});
-
+		});
+	}
 }
 
 function replaceClick() {
